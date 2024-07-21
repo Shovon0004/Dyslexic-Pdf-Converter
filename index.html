@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dyslu - Dyslexia-Friendly Document Converter</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        /* ... (keeping all the existing styles) ... */
+        /* Add new styles for the hero section */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes moveBackground {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            animation: moveBackground 20s linear infinite;
+        }
+        
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+           
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        nav.scrolled {
+            background-color: rgba(81, 59, 84, 0.28);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+
+        }
+        .logo span {
+            color:#27ae60;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        .converter {
+            background-color: #f4f4f4;
+            padding: 4rem 0;
+        }
+
+        .file-upload {
+            border: 2px dashed #3498db;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .file-upload:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+
+        .settings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5.2rem;
+            radius:20px;
+            padding: 4rem 0;
+            
+        }
+
+        .settings label {
+            display: block;
+            margin-bottom: 0.5rem;
+            animation: fadeInUp 0.5s ease-out;
+            
+            
+        }
+
+        .settings select,
+        .settings input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border-radius:20px;
+            
+        }
+
+        .settings select:focus,
+        .settings input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #3498db;
+        }
+
+        .convert-btn {
+            background-color: #2ecc71;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease-out 1s backwards;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .convert-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .about-us {
+            padding: 50px 0;
+            background-color: #fff;
+            text-align: center;
+        }
+        
+        .about-us .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .about-us h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .about-us .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: #666;
+        }
+        
+        .about-us .content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .about-us .our-journey,
+        .about-us .meet-the-team {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-us h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .about-us .our-journey p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .about-us .meet-the-team .team-members {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .about-us .team-member {
+            text-align: center;
+        }
+        
+        .about-us .team-member .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .about-us .team-member .name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .about-us .team-member .role {
+            font-size: 1em;
+            color: #777;
+        }
+        
+        footer {
+            background-color: #f8f8f8;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        footer .footer-links a {
+            margin-right: 15px;
+            color: #666;
+            text-decoration: none;
+        }
+        
+        footer .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        footer p {
+            font-size: 0.9em;
+            color: #666;
+            margin: 0;
+        }
+        
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 600px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero {
+            
+            color: white;
+            padding: 4rem 0;
+        }
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height:600px;
+        }
+        .hero-text {
+            flex: 1;
+            margin-left:10.2rem;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            margin-left:12.2rem;
+        }
+        .hero p {
+            font-size: 1rem;
+            margin-bottom: 2.0rem;
+            margin-left:16.2rem;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left:20.2rem;
+        }
+        .hero-buttons button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .get-started {
+            background-color: white;
+            color: black;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .learn-more {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        
+        
+        .video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+        }
+        #cursor-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .hero-text span {
+            color:#27ae60;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container nav-content">
+            <div class="logo">▲Dy<span>slu</span></div>
+            <div class="nav-links">
+                <a href="#hero">Home</a>
+                <a href="#converter"><i class="fa fa-refresh" aria-hidden="true"></i>
+                    Convert</a>
+                <a href="#about-us">About Us</a>
+                
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero">
+        <div class="container hero-content">
+            <video autoplay loop muted playsinline class="video-background">
+                <source src="your-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-text">
+                <h1>Welcome to ▲Dy<span>slu</span></h1>
+                <p>Making reading easier for everyone</p>
+                <div class="hero-buttons">
+                    <button class="get-started" id="get-started-btn">Get Started</button>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="converter" class="converter">
+        <div class="container">
+            <div class="file-upload animate-on-scroll">
+                <h2>Upload your PDF</h2>
+                <input type="file" accept="application/pdf">
+            </div>
+            <div class="settings animate-on-scroll">
+                <div>
+                    <label for="font"><i class="fa fa-font" aria-hidden="true"></i>
+                        Select Font:</label>
+                    <select name="font" id="font">
+                        <option value="OpenDyslexicAlta-Bold">OpenDyslexicAlta-Bold</option>
+                    <option value="OpenDyslexicAlta-BoldItalic">OpenDyslexicAlta-BoldItalic</option>
+                    <option value="OpenDyslexicAlta-Italic">OpenDyslexicAlta-Italic</option>
+                    <option value="OpenDyslexicAlta-Regular">OpenDyslexicAlta-Regular</option>
+                    <option value="OpenDyslexic-Bold">OpenDyslexic-Bold</option>
+                    <option value="OpenDyslexic-BoldItalic">OpenDyslexic-BoldItalic</option>
+                    <option value="OpenDyslexic-Italic">OpenDyslexic-Italic</option>
+                    <option value="OpenDyslexicMono-Regular">OpenDyslexicMono-Regular</option>
+                    <option value="OpenDyslexic-Regular">OpenDyslexic-Regular</option>
+                    <option value="Roboto-Black">Roboto-Black</option>
+                    <option value="Roboto-BlackItalic">Roboto-BlackItalic</option>
+                    <option value="Roboto-Bold">Roboto-Bold</option>
+                    <option value="Roboto-BoldItalic">Roboto-BoldItalic</option>
+                    <option value="Roboto-Italic">Roboto-Italic</option>
+                    <option value="Roboto-Light">Roboto-Light</option>
+                    <option value="Roboto-LightItalic">Roboto-LightItalic</option>
+                    <option value="Roboto-Medium">Roboto-Medium</option>
+                    <option value="Roboto-MediumItalic">Roboto-MediumItalic</option>
+                    <option value="Roboto-Regular">Roboto-Regular</option>
+                    <option value="Roboto-Thin">Roboto-Thin</option>
+                    <option value="Roboto-ThinItalic">Roboto-ThinItalic</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="text_size"><i class="fas fa-text-height"></i>Text Size:</label>
+                    <input type="number" name="text_size" id="text_size" min="8" max="72" value="14">
+                </div>
+                <div>
+                    <label for="line_spacing"><i class="fas fa-text-width"></i>  Line Spacing:</label>
+                    <input type="number" name="line_spacing" id="line_spacing" min="1" max="2" step="0.1" value="1.5">
+                </div>
+                <div>
+                    <label for="letter_spacing"><i class="fas fa-text-width"></i>  Letter Spacing:</label>
+                    <input type="number" name="letter_spacing" id="letter_spacing" min="0" max="10" step="0.1" value="0.5">
+                </div>
+                <div>
+                    <label for="text_color"><i class="fas fa-palette"></i>Text Color:</label>
+                    <input type="color" name="text_color" id="text_color" value="#000000">
+                </div>
+                <div>
+                    <label for="background_color"><i class="fas fa-fill-drip"></i>    Background Color:</label>
+                    <input type="color" name="background_color" id="background_color" value="#ffffff">
+                </div>
+            </div>
+            <button class="convert-btn animate-on-scroll"><i class="fas fa-exchange-alt"></i>     Convert</button>
+        </div>
+    </section>
+
+    <section id="about-us" class="about-us">
+        <div class="container">
+            <h2>About Us</h2>
+            <p class="subtitle">Learn more about the team behind Dyslu.</p>
+            <div class="content">
+                <div class="our-journey">
+                    <h3>Our Journey</h3>
+                    <p>Dyslu was founded with the goal of making document conversion easy and accessible for everyone. We've been on a mission to revolutionize the way people work with PDFs and other documents.</p>
+                    <p>Our team of passionate developers and designers have worked tirelessly to create a product that not only looks great, but also provides a seamless user experience. We're constantly innovating and improving our platform to better serve our customers.</p>
+                </div>
+                <div class="meet-the-team">
+                    <h3>Meet the Team</h3>
+                    <div class="team-members">
+                        <div class="team-member">
+                            <span class="icon">&#128100;</span>
+                            <p class="name">Sankalpa Sarkar</p>
+                            <p class="role">Backend Developer</p>
+                        </div>
+                        <div class="team-member">
+                            <span class="icon">&#128100;</span>
+                            <p class="name">Shovon Halder</p>
+                            <p class="role">Frontend Developer</p>
+                        </div>
+                        <div class="team-member">
+                            <span class="icon">&#128100;</span>
+                            <p class="name">Sahnik Biswas</p>
+                            <p class="role">Backend Developer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="container">
+                <div class="footer-links">
+                    <a href="./contact.html">Contact</a>
+                    <a href="./privacy.html">Privacy Policy</a>
+                    <a href="./terms.html">Terms of Use</a>
+                </div>
+                <p>&copy; 2024 Dyslu. All rights reserved.</p>
+            </div>
+        </footer>
+    </section>
+    
+    <div class="scroll-to-top" id="scroll-to-top">&#9650;</div>
+    <canvas id="cursor-animation"></canvas>
+
+    <script>
+        const canvas = document.getElementById('cursor-animation');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const maxParticles = 50;
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+                this.color = `hsla(${Math.random() * 360}, 100%, 50%, 0.8)`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.1) this.size -= 0.1;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function handleParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].size <= 0.3) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            handleParticles();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('mousemove', function(e) {
+            if (particles.length < maxParticles) {
+                particles.push(new Particle(e.x, e.y));
+            }
+        });
+
+        animate();
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+    <script>
+        const getStartedBtn = document.getElementById('get-started-btn');
+        const converterSection = document.getElementById('converter');
+    
+        getStartedBtn.addEventListener('click', () => {
+            converterSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    
+        const navbar = document.getElementById('navbar');
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        const animateTargets = document.querySelectorAll('.animate-target');
+        const animateOnScrollElems = document.querySelectorAll('.animate-on-scroll');
+        let currentImageIndex = 0;
+        const heroSection = document.querySelector('.hero');
+    
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                scrollToTopBtn.classList.remove('visible');
+            }
+    
+            animateOnScrollElems.forEach(elem => {
+                if (isInViewport(elem)) {
+                    elem.classList.add('visible');
+                }
+            });
+        });
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        function isInViewport(elem) {
+            const rect = elem.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            animateTargets.forEach(target => {
+                target.classList.add('visible');
+            });
+        });
+    </script>
+    <script>
+        window.embeddedChatbotConfig = {
+        chatbotId: "m-pSuz0fpyMKaJ3TpQoO9",
+        domain: "www.chatbase.co"
+        }
+        </script>
+        <script
+        src="https://www.chatbase.co/embed.min.js"
+        chatbotId="m-pSuz0fpyMKaJ3TpQoO9"
+        domain="www.chatbase.co"
+        defer>
+        </script>
+</body>
+</html>
